@@ -45,11 +45,15 @@ var (
 	BitcoinMain = &Params{
 		DumpedPrivateKeyHeader: []byte{128},
 		AddressHeader:          0,
+		HDPrivateKeyID:         []byte{0x04, 0x88, 0xad, 0xe4},
+		HDPublicKeyID:          []byte{0x04, 0x88, 0xb2, 0x1e},
 	}
 	//BitcoinTest is params for test net.
 	BitcoinTest = &Params{
 		DumpedPrivateKeyHeader: []byte{239},
 		AddressHeader:          111,
+		HDPrivateKeyID:         []byte{0x04, 0x35, 0x83, 0x94},
+		HDPublicKeyID:          []byte{0x04, 0x35, 0x87, 0xcf},
 	}
 )
 
@@ -57,6 +61,8 @@ var (
 type Params struct {
 	DumpedPrivateKeyHeader []byte
 	AddressHeader          byte
+	HDPrivateKeyID         []byte
+	HDPublicKeyID          []byte
 }
 
 //PublicKey represents public key for bitcoin

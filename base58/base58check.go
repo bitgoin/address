@@ -40,7 +40,7 @@ func Encode(encoded []byte) string {
 	encoded = append(encoded, hash[0:4]...)
 
 	//Convert this checksum'd version to a big Int
-	bigIntEncodedChecksum := big.NewInt(0).SetBytes(encoded)
+	bigIntEncodedChecksum := new(big.Int).SetBytes(encoded)
 
 	//Encode the big int checksum'd version into a Base58Checked string
 	base58EncodedChecksum := EncodeBig(nil, bigIntEncodedChecksum)

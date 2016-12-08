@@ -6,7 +6,8 @@
 
 ## Overview
 
-This  library for handling bitcoin address, including generate private keys from wif, sign/vefiry, and serializing. 
+This  library for handling bitcoin address, including generate private keys from wif, sign/vefiry, serializing,
+BIP32(Hierarchical Deterministic Bitcoin addresses) and BIP39(mnemonic seed). 
 
 ## Requirements
 
@@ -29,13 +30,23 @@ This requires
 import btcaddr
 
 func main(){
-	key, err := Generate(BitcoinTest)
+	key, err := btcaddr.Generate(BitcoinTest)
 	adr := key.PublicKey.Address()
-    key2, err := FromWIF(wif, BitcoinTest)
+    key2, err := btcaddr.FromWIF(wif, BitcoinTest)
 	data := []byte("test data")
 	sig, err := private.Sign(data)
 	err = key.PublicKey.Verify(sig, data)
-...
+
+    seed, err := btcaddr.GenerateSeed(btcaddr.RecommendedSeedLen)
+	master, err := btcaddr.NewMasterKey(seed,btcaddr.BitcoinTest)
+    derivate,err := master.Child(0)
+	derivatepub,err:=derivate.Neuter()
+
+    entropy, err := btcaddr.NewEntropy(256)
+    mnemonic, err := btcaddr.NewMnemonic(entropy)
+    seed := btcaddr.NewSeed(mnemonic, "Secret Passphrase")
+
+	..
 }
 ```
 
