@@ -334,28 +334,21 @@ func (k *ExtendedKey) Neuter() (*ExtendedKey, error) {
 		k.depth, k.childNum, false, k.param), nil
 }
 
-// ECPubKey converts the extended key to a btcec public key and returns it.
-func (k *ExtendedKey) ECPubKey() (*btcec.PublicKey, error) {
-	return btcec.ParsePubKey(k.pubKeyBytes(), btcec.S256())
+// PubKey converts the extended key to a btcec public key and returns it.
+func (k *ExtendedKey) PubKey() (*PublicKey, error) {
+	return NewPublicKey(k.pubKeyBytes(), k.param)
 }
 
-// ECPrivKey converts the extended key to a btcec private key and returns it.
+// PrivKey converts the extended key to a btcec private key and returns it.
 // As you might imagine this is only possible if the extended key is a private
 // extended key (as determined by the IsPrivate function).  The ErrNotPrivExtKey
 // error will be returned if this function is called on a public extended key.
-func (k *ExtendedKey) ECPrivKey() (*btcec.PrivateKey, error) {
+func (k *ExtendedKey) PrivKey() (*PrivateKey, error) {
 	if !k.isPrivate {
 		return nil, ErrNotPrivExtKey
 	}
 
-	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), k.key)
-	return privKey, nil
-}
-
-// Address converts the extended key to a standard bitcoin pay-to-pubkey-hash
-// address for the passed network.
-func (k *ExtendedKey) Address() (*PublicKey, error) {
-	return NewPublicKey(k.pubKeyBytes(), k.param)
+	return NewPrivateKey(k.key, k.param), nil
 }
 
 // paddedAppend appends the src byte slice to dst, returning the new slice.

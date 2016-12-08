@@ -40,7 +40,9 @@ func main(){
     seed, err := btcaddr.GenerateSeed(btcaddr.RecommendedSeedLen)
 	master, err := btcaddr.NewMasterKey(seed,btcaddr.BitcoinTest)
     derivate,err := master.Child(0)
+	priv,err:=derivate.PrivKey()
 	derivatepub,err:=derivate.Neuter()
+	pub,err:=derivatepub.PubKey()
 
     entropy, err := btcaddr.NewEntropy(256)
     mnemonic, err := btcaddr.NewMnemonic(entropy)
