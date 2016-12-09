@@ -34,7 +34,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/monarj/wallet/params"
 	"github.com/utamaro/btcaddr/base58"
 	"github.com/utamaro/btcaddr/btcec"
 	"golang.org/x/crypto/ripemd160"
@@ -204,7 +203,7 @@ func (pub *PublicKey) AddressBytes() []byte {
 	ripeHashedBytes := ripeHash.Sum(nil)
 	ripeHashedBytes = append(ripeHashedBytes, 0x0)
 	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
-	ripeHashedBytes[0] = params.AddressHeader
+	ripeHashedBytes[0] = pub.params.AddressHeader
 
 	return ripeHashedBytes[1:]
 }
