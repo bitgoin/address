@@ -203,7 +203,7 @@ func (pub *PublicKey) AddressBytes() []byte {
 	ripeHashedBytes := ripeHash.Sum(nil)
 	ripeHashedBytes = append(ripeHashedBytes, 0x0)
 	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
-	ripeHashedBytes[0] = pub.params.AddressHeader
+	ripeHashedBytes[0] = pub.param.AddressHeader
 
 	return ripeHashedBytes[1:]
 }
