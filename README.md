@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/utamaro/base58?status.svg)](https://godoc.org/github.com/utamaro/btcaddr)
+[![GoDoc](https://godoc.org/github.com/utamaro/btcaddr?status.svg)](https://godoc.org/github.com/utamaro/btcaddr)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/utamaro/btcaddr/LICENSE)
 
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-This  library for handling bitcoin address, including generate private keys from wif, sign/vefiry, serializing,
+This  library is for handling bitcoin address, including generate private keys from wif, sign/vefiry, serializing,
 BIP32(Hierarchical Deterministic Bitcoin addresses) and BIP39(mnemonic seed). 
 
 ## Requirements
