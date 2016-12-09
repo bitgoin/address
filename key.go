@@ -55,6 +55,8 @@ var (
 		HDPrivateKeyID:         []byte{0x04, 0x35, 0x83, 0x94},
 		HDPublicKeyID:          []byte{0x04, 0x35, 0x87, 0xcf},
 	}
+
+	secp256k1 = btcec.S256()
 )
 
 //Params is parameters of the coin.
@@ -80,7 +82,6 @@ type PrivateKey struct {
 
 //NewPublicKey returns PublicKey struct using public key hex string.
 func NewPublicKey(pubKeyByte []byte, param *Params) (*PublicKey, error) {
-	secp256k1 := btcec.S256()
 	key, err := btcec.ParsePubKey(pubKeyByte, secp256k1)
 	if err != nil {
 		return nil, err
@@ -98,7 +99,6 @@ func NewPublicKey(pubKeyByte []byte, param *Params) (*PublicKey, error) {
 
 //FromWIF gets PublicKey and PrivateKey from private key of WIF format.
 func FromWIF(wif string, param *Params) (*PrivateKey, error) {
-	secp256k1 := btcec.S256()
 	pb, err := base58.Decode(wif)
 	if err != nil {
 		return nil, err
@@ -133,7 +133,6 @@ func FromWIF(wif string, param *Params) (*PrivateKey, error) {
 
 //NewPrivateKey creates and returns PrivateKey from bytes.
 func NewPrivateKey(pb []byte, param *Params) *PrivateKey {
-	secp256k1 := btcec.S256()
 	priv, pub := btcec.PrivKeyFromBytes(secp256k1, pb)
 	return &PrivateKey{
 		PrivateKey: priv,
@@ -147,7 +146,6 @@ func NewPrivateKey(pb []byte, param *Params) *PrivateKey {
 
 //Generate generates random PublicKey and PrivateKey.
 func Generate(param *Params) (*PrivateKey, error) {
-	secp256k1 := btcec.S256()
 	prikey, err := btcec.NewPrivateKey(secp256k1)
 	if err != nil {
 		return nil, err
@@ -227,7 +225,6 @@ func DecodeAddress(addr string) ([]byte, error) {
 
 //Verify verifies signature is valid or not.
 func (pub *PublicKey) Verify(signature []byte, data []byte) error {
-	secp256k1 := btcec.S256()
 	sig, err := btcec.ParseSignature(signature, secp256k1)
 	if err != nil {
 		return err
