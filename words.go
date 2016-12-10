@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package btcaddr
+package address
 
 var wordlist = []string{
 	"abandon",

@@ -2,7 +2,7 @@
 // Use of this source code is governed by an ISC
 // license that can be found in the LICENSE file.
 
-package btcaddr
+package address
 
 // References:
 //   [BIP32]: BIP0032 - Hierarchical Deterministic Wallets

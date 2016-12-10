@@ -26,14 +26,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package btcaddr
+package address
 
 import (
 	"encoding/hex"
 	"log"
 	"testing"
 
-	"github.com/utamaro/btcaddr/btcec"
+	"github.com/bitgoin/address/btcec"
 )
 
 func TestKeys2(t *testing.T) {

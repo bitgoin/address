@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package btcaddr
+package address
 
 import (
 	"crypto/sha256"
@@ -34,27 +34,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/utamaro/btcaddr/base58"
-	"github.com/utamaro/btcaddr/btcec"
+	"github.com/bitgoin/address/base58"
+	"github.com/bitgoin/address/btcec"
 	"golang.org/x/crypto/ripemd160"
 )
 
 var (
-	//BitcoinMain is params for main net.
-	BitcoinMain = &Params{
-		DumpedPrivateKeyHeader: []byte{128},
-		AddressHeader:          0,
-		HDPrivateKeyID:         []byte{0x04, 0x88, 0xad, 0xe4},
-		HDPublicKeyID:          []byte{0x04, 0x88, 0xb2, 0x1e},
-	}
-	//BitcoinTest is params for test net.
-	BitcoinTest = &Params{
-		DumpedPrivateKeyHeader: []byte{239},
-		AddressHeader:          111,
-		HDPrivateKeyID:         []byte{0x04, 0x35, 0x83, 0x94},
-		HDPublicKeyID:          []byte{0x04, 0x35, 0x87, 0xcf},
-	}
-
 	secp256k1 = btcec.S256()
 )
 
@@ -62,6 +47,7 @@ var (
 type Params struct {
 	DumpedPrivateKeyHeader []byte
 	AddressHeader          byte
+	P2SHHeader             byte
 	HDPrivateKeyID         []byte
 	HDPublicKeyID          []byte
 }
@@ -200,17 +186,17 @@ func (pub *PublicKey) AddressBytes() []byte {
 	if _, err := ripeHash.Write(shadPublicKeyBytes[:]); err != nil {
 		log.Fatal(err)
 	}
-	ripeHashedBytes := ripeHash.Sum(nil)
-	ripeHashedBytes = append(ripeHashedBytes, 0x0)
-	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
-	ripeHashedBytes[0] = pub.param.AddressHeader
-
-	return ripeHashedBytes[1:]
+	return ripeHash.Sum(nil)
 }
 
 //Address returns bitcoin address from PublicKey
 func (pub *PublicKey) Address() string {
-	return base58.Encode(pub.AddressBytes())
+	ripeHashedBytes := pub.AddressBytes()
+	ripeHashedBytes = append(ripeHashedBytes, 0x0)
+	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
+	ripeHashedBytes[0] = pub.param.AddressHeader
+
+	return base58.Encode(ripeHashedBytes)
 }
 
 //DecodeAddress converts bitcoin address to hex form.
@@ -233,4 +219,24 @@ func (pub *PublicKey) Verify(signature []byte, data []byte) error {
 		return fmt.Errorf("signature is invalid")
 	}
 	return nil
+}
+
+//AddressBytes returns ripeme160(sha256(redeem)) (address of redeem script).
+func AddressBytes(redeem []byte) []byte {
+	h := sha256.Sum256(redeem)
+	ripeHash := ripemd160.New()
+	if _, err := ripeHash.Write(h[:]); err != nil {
+		log.Fatal(err)
+	}
+	return ripeHash.Sum(nil)
+}
+
+//Address returns ripeme160(sha256(redeem)) (address of redeem script).
+func Address(redeem []byte, header byte) string {
+	ripeHashedBytes := AddressBytes(redeem)
+	ripeHashedBytes = append(ripeHashedBytes, 0x0)
+	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
+	ripeHashedBytes[0] = header
+
+	return base58.Encode(ripeHashedBytes)
 }

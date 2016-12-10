@@ -1,5 +1,5 @@
-[![GoDoc](https://godoc.org/github.com/utamaro/btcaddr?status.svg)](https://godoc.org/github.com/utamaro/btcaddr)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/utamaro/btcaddr/LICENSE)
+[![GoDoc](https://godoc.org/github.com/bitgoin/address?status.svg)](https://godoc.org/github.com/bitgoin/address)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bitgoin/address/LICENSE)
 
 
 # btcaddr 
@@ -19,7 +19,7 @@ This requires
 
 ## Installation
 
-     $ go get github.com/utamaro/btcaddr
+     $ go get github.com/bitgoin/address
 
 
 ## Example
@@ -27,26 +27,26 @@ This requires
 
 ```go
 
-import btcaddr
+import address
 
 func main(){
-	key, err := btcaddr.Generate(BitcoinTest)
+	key, err := address.Generate(BitcoinTest)
 	adr := key.PublicKey.Address()
-    key2, err := btcaddr.FromWIF(wif, BitcoinTest)
+    key2, err := address.FromWIF(wif, BitcoinTest)
 	data := []byte("test data")
 	sig, err := private.Sign(data)
 	err = key.PublicKey.Verify(sig, data)
 
-    seed, err := btcaddr.GenerateSeed(btcaddr.RecommendedSeedLen)
-	master, err := btcaddr.NewMasterKey(seed,btcaddr.BitcoinTest)
+    seed, err := address.GenerateSeed(address.RecommendedSeedLen)
+	master, err := address.NewMasterKey(seed,address.BitcoinTest)
     derivate,err := master.Child(0)
 	priv,err:=derivate.PrivKey()
 	derivatepub,err:=derivate.Neuter()
 	pub,err:=derivatepub.PubKey()
 
-    entropy, err := btcaddr.NewEntropy(256)
-    mnemonic, err := btcaddr.NewMnemonic(entropy)
-    seed := btcaddr.NewSeed(mnemonic, "Secret Passphrase")
+    entropy, err := address.NewEntropy(256)
+    mnemonic, err := address.NewMnemonic(entropy)
+    seed := address.NewSeed(mnemonic, "Secret Passphrase")
 
 	..
 }

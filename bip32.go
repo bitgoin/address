@@ -5,7 +5,7 @@
 //original code:https://github.com/btcsuite/btcutil/tree/master/hdkeychain
 //license:ISC License.
 
-package btcaddr
+package address
 
 // References:
 //   [BIP32]: BIP0032 - Hierarchical Deterministic Wallets
@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/utamaro/btcaddr/base58"
-	"github.com/utamaro/btcaddr/btcec"
+	"github.com/bitgoin/address/base58"
+	"github.com/bitgoin/address/btcec"
 )
 
 const (
