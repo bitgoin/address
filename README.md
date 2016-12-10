@@ -27,7 +27,7 @@ This requires
 
 ```go
 
-import address
+import "github.com/bitgoin/address"
 
 func main(){
 	key, err := address.Generate(BitcoinTest)
