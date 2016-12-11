@@ -3,7 +3,7 @@ language: go
 go:
   - 1.7
 
-bbefore_install:
+before_install:
 - go get -u github.com/axw/gocov/gocov
 - go get -u github.com/alecthomas/gometalinter
 - go get -u github.com/mattn/goveralls
