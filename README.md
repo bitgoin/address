@@ -1,5 +1,6 @@
+[![Build Status](https://travis-ci.org/bitgoin/address.svg?branch=master)](https://travis-ci.org/bitgoin/address)
 [![GoDoc](https://godoc.org/github.com/bitgoin/address?status.svg)](https://godoc.org/github.com/bitgoin/address)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bitgoin/address/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/bitgoin/address/LICENSE)
 
 
 # address 
