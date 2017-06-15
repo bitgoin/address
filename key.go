@@ -46,8 +46,8 @@ var (
 //Params is parameters of the coin.
 type Params struct {
 	DumpedPrivateKeyHeader []byte
-	AddressHeader          byte
-	P2SHHeader             byte
+	AddressHeader          []byte
+	P2SHHeader             []byte
 	HDPrivateKeyID         []byte
 	HDPublicKeyID          []byte
 }
@@ -192,9 +192,7 @@ func (pub *PublicKey) AddressBytes() []byte {
 //Address returns bitcoin address from PublicKey
 func (pub *PublicKey) Address() string {
 	ripeHashedBytes := pub.AddressBytes()
-	ripeHashedBytes = append(ripeHashedBytes, 0x0)
-	copy(ripeHashedBytes[1:], ripeHashedBytes[:len(ripeHashedBytes)-1])
-	ripeHashedBytes[0] = pub.param.AddressHeader
+	ripeHashedBytes = append(pub.param.AddressHeader, ripeHashedBytes...)
 
 	return base58.Encode(ripeHashedBytes)
 }
