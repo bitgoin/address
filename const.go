@@ -53,4 +53,12 @@ var (
 		HDPrivateKeyID:         []byte{0x04, 0x88, 0xad, 0xe4},
 		HDPublicKeyID:          []byte{0x04, 0x88, 0xb2, 0x1e},
 	}
+	//LitecoinMain params for Litecoin main net
+	LitecoinMain = &Params{
+		DumpedPrivateKeyHeader: []byte{0xB0},
+		AddressHeader:          []byte{0x30},
+		P2SHHeader:             []byte{0x50},
+		HDPrivateKeyID:         []byte{0x04, 0x88, 0xad, 0xe4},
+		HDPublicKeyID:          []byte{0x04, 0x88, 0xb2, 0x1e},
+	}
 )
